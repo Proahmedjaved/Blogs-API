@@ -10,3 +10,8 @@ wheels/
 .env
 # Virtual environments
 .venv
+# Coverage
+.coverage
+coverage.xml
+coverage_html/
+htmlcov/
