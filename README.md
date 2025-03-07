@@ -119,6 +119,30 @@ FastAPI automatically generates interactive API documentation:
 - DELETE `/api/posts/{post_id}` - Delete a blog post (requires authentication)
 - GET `/api/posts/me` - Get posts by the authenticated user (requires authentication)
 
-## Development
+## Troubleshooting
 
-### Project Structure
+1. Database connection issues:
+   - Verify PostgreSQL is running
+   - Check database credentials in .env
+   - Ensure database exists
+
+2. Redis connection issues:
+   - Verify Redis is running
+   - Check Redis connection string in .env
+
+3. Test failures:
+   - Ensure .env.test is properly configured
+   - Check test database exists
+   - Verify Redis is running for cache tests
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details
