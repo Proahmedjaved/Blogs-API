@@ -23,7 +23,7 @@ A RESTful API for a blog application built with FastAPI, PostgreSQL, and Redis.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/blog-api.git
+   git clone https://github.com/Proahmedjaved/Blogs-API.git
    cd blog-api
    ```
 
@@ -32,18 +32,11 @@ A RESTful API for a blog application built with FastAPI, PostgreSQL, and Redis.
    pip install uv
    ```
 
-3. Create and activate a virtual environment:
+3. Install dependencies:
    ```bash
-   uv venv
-   source .venv/bin/activate  # On Unix/macOS
-   # or
-   .venv\Scripts\activate  # On Windows
+   uv sync
    ```
 
-4. Install dependencies:
-   ```bash
-   uv pip install -r requirements.txt
-   ```
 
 ## Running the Application
 
