@@ -15,3 +15,4 @@ wheels/
 coverage.xml
 coverage_html/
 htmlcov/
+test.db

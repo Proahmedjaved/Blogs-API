@@ -10,7 +10,7 @@ from app.cache.redis import get_cache, set_cache, invalidate_cache
 
 router = APIRouter()
 
-@router.post("/", response_model=PostSchema)
+@router.post("/", response_model=PostSchema, status_code=status.HTTP_201_CREATED)
 def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     db_post = Post(title=post.title, content=post.content, author_id=current_user.id)
     db.add(db_post)
@@ -33,8 +33,8 @@ def read_posts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     
     posts = db.query(Post).offset(skip).limit(limit).all()
     
-    # Convert posts to dict for caching
-    posts_data = [PostSchema.from_orm(post).dict() for post in posts]
+    # Convert posts to dict for caching using model_validate
+    posts_data = [PostSchema.model_validate(post).model_dump() for post in posts]
     set_cache(cache_key, posts_data)
     
     return posts
@@ -49,8 +49,8 @@ def read_user_posts(current_user: User = Depends(get_current_user), db: Session 
     
     posts = db.query(Post).filter(Post.author_id == current_user.id).all()
     
-    # Convert posts to dict for caching
-    posts_data = [PostSchema.from_orm(post).dict() for post in posts]
+    # Convert posts to dict for caching using model_validate
+    posts_data = [PostSchema.model_validate(post).model_dump() for post in posts]
     set_cache(cache_key, posts_data)
     
     return posts
@@ -67,8 +67,8 @@ def read_post(post_id: int, db: Session = Depends(get_db)):
     if post is None:
         raise HTTPException(status_code=404, detail="Post not found")
     
-    # Convert post to dict for caching
-    post_data = PostSchema.from_orm(post).dict()
+    # Convert post to dict for caching using model_validate
+    post_data = PostSchema.model_validate(post).model_dump()
     set_cache(cache_key, post_data)
     
     return post
@@ -88,7 +88,7 @@ def update_post(
         raise HTTPException(status_code=403, detail="Not authorized to update this post")
     
     # Update post fields if provided
-    for key, value in post_update.dict(exclude_unset=True).items():
+    for key, value in post_update.model_dump(exclude_unset=True).items():
         setattr(db_post, key, value)
     
     db.commit()
